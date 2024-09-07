@@ -13,7 +13,7 @@ import {
 const API_URL = "http://localhost:5000/api";
 
 const CurrencyConverter = () => {
-  const [currencies, setCurrencies] = useState([]); // Change this to an empty array
+  const [currencies, setCurrencies] = useState([]);
   const [fromCurrency, setFromCurrency] = useState("USD");
   const [toCurrency, setToCurrency] = useState("EUR");
   const [amount, setAmount] = useState(1);
@@ -28,13 +28,13 @@ const CurrencyConverter = () => {
       try {
         const response = await axios.get(`${API_URL}/currencies`);
         if (response.data.success && response.data.currencies) {
-          setCurrencies(response.data.currencies); // Ensure this is an array
+          setCurrencies(response.data.currencies);
         } else {
           console.error(
             "Invalid response format for currencies",
             response.data
           );
-          setCurrencies([]); // Set as an empty array if response is invalid
+          setCurrencies([]);
         }
       } catch (error) {
         console.error("Error fetching currencies:", error);
