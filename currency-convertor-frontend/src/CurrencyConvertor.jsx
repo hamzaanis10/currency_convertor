@@ -13,7 +13,7 @@ import {
 const API_URL = "http://localhost:5000/api";
 
 const CurrencyConverter = () => {
-  const [currencies, setCurrencies] = useState({});
+  const [currencies, setCurrencies] = useState([]); // Change this to an empty array
   const [fromCurrency, setFromCurrency] = useState("USD");
   const [toCurrency, setToCurrency] = useState("EUR");
   const [amount, setAmount] = useState(1);
@@ -28,17 +28,17 @@ const CurrencyConverter = () => {
       try {
         const response = await axios.get(`${API_URL}/currencies`);
         if (response.data.success && response.data.currencies) {
-          setCurrencies(response.data.currencies);
+          setCurrencies(response.data.currencies); // Ensure this is an array
         } else {
           console.error(
             "Invalid response format for currencies",
             response.data
           );
-          setCurrencies({});
+          setCurrencies([]); // Set as an empty array if response is invalid
         }
       } catch (error) {
         console.error("Error fetching currencies:", error);
-        setCurrencies({});
+        setCurrencies([]);
       }
     }
     fetchCurrencies();
@@ -89,7 +89,7 @@ const CurrencyConverter = () => {
                 value={fromCurrency}
                 onChange={(e) => setFromCurrency(e.target.value)}
               >
-                {Object.keys(currencies).map((currencyCode) => (
+                {currencies.map((currencyCode) => (
                   <option key={currencyCode} value={currencyCode}>
                     {currencyCode}
                   </option>
@@ -104,7 +104,7 @@ const CurrencyConverter = () => {
                 value={toCurrency}
                 onChange={(e) => setToCurrency(e.target.value)}
               >
-                {Object.keys(currencies).map((currencyCode) => (
+                {currencies.map((currencyCode) => (
                   <option key={currencyCode} value={currencyCode}>
                     {currencyCode}
                   </option>
