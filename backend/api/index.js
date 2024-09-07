@@ -1,10 +1,10 @@
+require("dotenv").config();
 const express = require("express");
 const axios = require("axios");
 const cors = require("cors");
 
 const app = express();
-const PORT = process.env.PORT || 5000;
-const API_KEY = "4E0VK7BnkdeUuh1vegAt808v2IUjzUR6lxcvBMT2";
+const API_KEY = process.env.FREE_CURRENCY_API_KEY;
 
 app.use(cors());
 
@@ -38,10 +38,10 @@ app.get("/api/currencies", async (req, res) => {
       `https://api.freecurrencyapi.com/v1/currencies?apikey=${API_KEY}`
     );
 
-    const currencies = response.data.data; // This will return an object with currency codes and their names
+    const currencies = response.data.data;
     return res.status(200).json({
       success: true,
-      currencies: Object.keys(currencies), // Return an array of currency codes
+      currencies: Object.keys(currencies),
     });
   } catch (error) {
     console.error("Error fetching currencies:", error.message);
@@ -49,6 +49,4 @@ app.get("/api/currencies", async (req, res) => {
   }
 });
 
-app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
-});
+module.exports = app;
